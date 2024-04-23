@@ -3,18 +3,14 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Buscar Carta MTG</title>
+    <title>Cartitas</title>
     <style>
         body {
             display: flex;
             justify-content: center;
             align-items: center;
             height: 100vh;
-            margin: 0;
-            background-image: url("/static/resources/mahoraga.gif");
-            background-size: cover;
-            background-repeat: no-repeat;
-            background-attachment: fixed;
+            background-image: url("/static/resources/fondo.png");
             margin: 0;
             padding: 0;
             font-family: Arial, sans-serif;
@@ -22,6 +18,12 @@
 
         #content {
             text-align: center;
+        }
+
+        #infoCarta {
+            background-color: rgba(255, 255, 255, 0.8); /* Color de fondo semitransparente */
+            padding: 10px; /* Añade un espacio alrededor del contenido */
+            border-radius: 10px; /* Añade esquinas redondeadas */
         }
     </style>
     <script>
@@ -34,14 +36,18 @@
             .then(data => {
                 var carta = data.cards[0];
                 if (carta) {
-                    document.getElementById("nombreMostrado").innerText = carta.name;
+                    document.getElementById("nombreCarta").innerText = carta.name;
+                    
                     document.getElementById("tipoCarta").innerText = "Tipo de carta: " + carta.type;
                     
                     document.getElementById("costeMana").innerHTML = "Coste de maná: " + carta.manaCost.replace(/{(.*?)}/g, function(match, p1) {
                         return '<img src="/static/' + p1 + '.png" style="width: 13px; height: 13px;">';
                     });
 
-                    document.getElementById("textoCarta").innerText = "Texto de la carta: " + carta.text;
+                    var textoCarta = carta.text.replace(/\[/g, "<br>["); // Introduce un salto de línea antes de cada [
+                    document.getElementById("textoCarta").innerHTML = "Texto de la carta: " + textoCarta.replace(/{(.*?)}/g, function(match, p1) {
+                        return '<img src="/static/' + p1 + '.png" style="width: 13px; height: 13px;">';
+                    });
                 } else {
                     alert("No se encontró ninguna carta con ese nombre.");
                 }
@@ -58,7 +64,7 @@
         <input type="text" id="nombreCarta" placeholder="Nombre de la carta">
         <button onclick="buscarCarta()">Buscar</button>
         <div id="infoCarta">
-            <p id="nombreMostrado"></p>
+            <p id="nombreCarta"></p>
             <p id="tipoCarta"></p>
             <p id="costeMana"></p>
             <p id="textoCarta"></p>
