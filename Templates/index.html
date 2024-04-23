@@ -34,10 +34,13 @@
             .then(data => {
                 var carta = data.cards[0];
                 if (carta) {
+                    document.getElementById("nombreMostrado").innerText = carta.name;
                     document.getElementById("tipoCarta").innerText = "Tipo de carta: " + carta.type;
+                    
                     document.getElementById("costeMana").innerHTML = "Coste de maná: " + carta.manaCost.replace(/{(.*?)}/g, function(match, p1) {
                         return '<img src="/static/' + p1 + '.png" style="width: 13px; height: 13px;">';
                     });
+
                     document.getElementById("textoCarta").innerText = "Texto de la carta: " + carta.text;
                 } else {
                     alert("No se encontró ninguna carta con ese nombre.");
@@ -55,6 +58,7 @@
         <input type="text" id="nombreCarta" placeholder="Nombre de la carta">
         <button onclick="buscarCarta()">Buscar</button>
         <div id="infoCarta">
+            <p id="nombreMostrado"></p>
             <p id="tipoCarta"></p>
             <p id="costeMana"></p>
             <p id="textoCarta"></p>
