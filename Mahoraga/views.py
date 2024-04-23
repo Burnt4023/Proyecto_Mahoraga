@@ -1,4 +1,6 @@
 from django.shortcuts import render
 
-def my_view(request):
+def buscador(request):
+    return render(request, 'buscador.html')
+def index(request):
     return render(request, 'index.html')

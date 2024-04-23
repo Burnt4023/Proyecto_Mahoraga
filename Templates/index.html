@@ -3,91 +3,22 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Cartitas</title>
+    <title>Página principal</title>
     <style>
         body {
             display: flex;
             justify-content: center;
             align-items: center;
-            height: 100vh;
-            background-image: url("/static/resources/fondo.png");
-            margin: 0;
-            padding: 0;
+            height: 100vh; /* Esto asegura que el contenido se centre verticalmente en la ventana */
+            margin: 0; /* Elimina el margen predeterminado */
             font-family: Arial, sans-serif;
         }
-
-        #content {
-            max-width: 800px;
-            background-color: rgba(255, 255, 255, 0.8);
-            padding: 20px;
-            border-radius: 10px;
-            display: flex;
-            justify-content: center; /* Alinear el contenido al centro horizontal */
-            align-items: center; /* Alinear el contenido al centro vertical */
-        }
-
-        #infoCarta {
-            flex-grow: 1;
-            padding-left: 20px;
-            text-align: left; /* Alinear el texto a la izquierda */
-        }
-
-        #imagenCarta {
-            width: 400px;
-            height: 300px;
-            max-width: 400px;
-            height: auto;
-            margin-right: 20px;
-            display: none; /* Ocultar la imagen inicialmente */
-        }
     </style>
-    <script>
-        function buscarCarta() {
-            var nombreCarta = document.getElementById("nombreCarta").value;
-            var url = "https://api.magicthegathering.io/v1/cards?name=" + nombreCarta;
-        
-            fetch(url)
-            .then(response => response.json())
-            .then(data => {
-                var carta = data.cards[0];
-                if (carta) {
-                    document.getElementById("nombreCartaInfo").innerText = carta.name;
-                    document.getElementById("tipoCarta").innerText = carta.type;
-                    document.getElementById("costeMana").innerHTML = "Coste de maná: " + carta.manaCost.replace(/{(.*?)}/g, function(match, p1) {
-                        return '<img src="/static/mana/' + p1 + '.png" style="width: 13px; height: 13px;">';
-                    });
-                    var textoCarta = carta.text.replace(/\[/g, "<br>[").replace(/\•/g, "<br>•");
-                    document.getElementById("textoCarta").innerHTML = textoCarta.replace(/{(.*?)}/g, function(match, p1) {
-                        return '<img src="/static/mana/' + p1 + '.png" style="width: 13px; height: 13px;">';
-                    });
-                    if (carta.imageUrl) {
-                        document.getElementById("imagenCarta").src = carta.imageUrl;
-                        document.getElementById("imagenCarta").style.display = "block"; // Mostrar la imagen
-                    }
-                } else {
-                    alert("No se encontró ninguna carta con ese nombre.");
-                }
-            })
-            .catch(error => {
-                console.error('Error al buscar la carta:', error);
-            });
-        }
-    </script>
 </head>
 <body>
-    <img id="imagenCarta" alt="Imagen de la carta">
-    <div id="content">
-        <div id="infoCarta">
-            <h1>Buscar Carta MTG</h1>
-            <input type="text" id="nombreCarta" placeholder="Nombre de la carta">
-            <button onclick="buscarCarta()">Buscar</button>
-            <div id="infoCarta">
-                <p id="nombreCartaInfo"></p>
-                <p id="tipoCarta"></p>
-                <p id="costeMana"></p>
-                <p id="textoCarta"></p>
-            </div>
-        </div>
+    <div>
+        <h1>Página principal</h1>
+        <a href="/buscador"><button>Ir al buscador</button></a>
     </div>
 </body>
 </html>
