@@ -25,6 +25,12 @@
             padding: 10px; /* Añade un espacio alrededor del contenido */
             border-radius: 10px; /* Añade esquinas redondeadas */
         }
+        #infoCarta {
+            text-align: center;
+            max-width: 800px; /* Anchura máxima deseada */
+            width: 90%; /* Opcional: para que el contenido no ocupe toda la pantalla en dispositivos grandes */
+            margin: 0 auto; /* Centra el div horizontalmente */
+        }
     </style>
     <script>
         function buscarCarta() {
@@ -36,17 +42,17 @@
             .then(data => {
                 var carta = data.cards[0];
                 if (carta) {
-                    document.getElementById("nombreCarta").innerText = carta.name;
+                    document.getElementById("nombreCartaInfo").innerText = carta.name;
                     
-                    document.getElementById("tipoCarta").innerText = "Tipo de carta: " + carta.type;
+                    document.getElementById("tipoCarta").innerText = carta.type;
                     
                     document.getElementById("costeMana").innerHTML = "Coste de maná: " + carta.manaCost.replace(/{(.*?)}/g, function(match, p1) {
-                        return '<img src="/static/' + p1 + '.png" style="width: 13px; height: 13px;">';
+                        return '<img src="/static/mana/' + p1 + '.png" style="width: 13px; height: 13px;">';
                     });
 
-                    var textoCarta = carta.text.replace(/\[/g, "<br>["); // Introduce un salto de línea antes de cada [
-                    document.getElementById("textoCarta").innerHTML = "Texto de la carta: " + textoCarta.replace(/{(.*?)}/g, function(match, p1) {
-                        return '<img src="/static/' + p1 + '.png" style="width: 13px; height: 13px;">';
+                    var textoCarta = carta.text.replace(/\[/g, "<br>[").replace(/\•/g, "<br>•"); // Introduce un salto de línea antes de cada [
+                    document.getElementById("textoCarta").innerHTML = textoCarta.replace(/{(.*?)}/g, function(match, p1) {
+                        return '<img src="/static/mana/' + p1 + '.png" style="width: 13px; height: 13px;">';
                     });
                 } else {
                     alert("No se encontró ninguna carta con ese nombre.");
@@ -64,7 +70,7 @@
         <input type="text" id="nombreCarta" placeholder="Nombre de la carta">
         <button onclick="buscarCarta()">Buscar</button>
         <div id="infoCarta">
-            <p id="nombreCarta"></p>
+            <p id="nombreCartaInfo"></p>
             <p id="tipoCarta"></p>
             <p id="costeMana"></p>
             <p id="textoCarta"></p>
