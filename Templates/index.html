@@ -1,11 +1,64 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <title>Home Page</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Buscar Carta MTG</title>
+    <style>
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            background-image: url("/static/resources/mahoraga.gif");
+            background-size: cover;
+            background-repeat: no-repeat;
+            background-attachment: fixed;
+            margin: 0;
+            padding: 0;
+            font-family: Arial, sans-serif;
+        }
+
+        #content {
+            text-align: center;
+        }
+    </style>
+    <script>
+        function buscarCarta() {
+            var nombreCarta = document.getElementById("nombreCarta").value;
+            var url = "https://api.magicthegathering.io/v1/cards?name=" + nombreCarta;
+
+            fetch(url)
+            .then(response => response.json())
+            .then(data => {
+                var carta = data.cards[0];
+                if (carta) {
+                    document.getElementById("tipoCarta").innerText = "Tipo de carta: " + carta.type;
+                    document.getElementById("costeMana").innerHTML = "Coste de maná: " + carta.manaCost.replace(/{(.*?)}/g, function(match, p1) {
+                        return '<img src="/static/' + p1 + '.png" style="width: 13px; height: 13px;">';
+                    });
+                    document.getElementById("textoCarta").innerText = "Texto de la carta: " + carta.text;
+                } else {
+                    alert("No se encontró ninguna carta con ese nombre.");
+                }
+            })
+            .catch(error => {
+                console.error('Error al buscar la carta:', error);
+            });
+        }
+    </script>
 </head>
 <body>
-    <h1>Home Page</h1>
-    <p>This page is rendered as a Django Template</p>
-    <h3>Happy Learning :)</h3>
+    <div id="content">
+        <h1>Buscar Carta MTG</h1>
+        <input type="text" id="nombreCarta" placeholder="Nombre de la carta">
+        <button onclick="buscarCarta()">Buscar</button>
+        <div id="infoCarta">
+            <p id="tipoCarta"></p>
+            <p id="costeMana"></p>
+            <p id="textoCarta"></p>
+        </div>
+    </div>
 </body>
 </html>
