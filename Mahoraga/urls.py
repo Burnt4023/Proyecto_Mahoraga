@@ -4,6 +4,6 @@ from django.conf import settings
 from django.conf.urls.static import static
 
 urlpatterns = [
-    path('buscador/', views.buscador, name='buscador'),
     path('', views.index, name='index'),
+    path('buscador/<str:nombre_carta>/', views.buscador, name='buscador'),
 ] + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
