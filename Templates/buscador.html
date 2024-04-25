@@ -28,6 +28,11 @@
             max-width: 100%; /* Imagen de la carta ocupa todo el ancho disponible */
             height: auto; /* Altura automática para mantener la proporción */
         }
+
+        /* Estilos para la descripción de la carta */
+        .carta .descripcion {
+            margin-top: 10px; /* Espacio entre la descripción y otros elementos */
+        }
     </style>
 </head>
 <body>
@@ -39,7 +44,10 @@
             <p>Nombre: {{ carta.name }}</p>
             <p>Tipo: {{ carta.type }}</p>
             <p>Coste de maná: {{ carta.manaCost }}</p>
-            <!-- Agrega más información de la carta según sea necesario -->
+            <p>Descripción: {{ carta.text }}</p>
+            <p>Rareza: {{ carta.rarity }}</p>
+            <p>Conjunto: {{ carta.set }}</p>
+            <!-- Puedes agregar más información de la carta aquí -->
         </div>
         {% endfor %}
     </div>
