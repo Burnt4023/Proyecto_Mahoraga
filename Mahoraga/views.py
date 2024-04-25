@@ -35,5 +35,6 @@ def buscador(request, nombre_carta):
         return render(request, 'buscador.html', {'cartas': cartas_unicas, 'nombre_carta': nombre_carta})
     except requests.exceptions.RequestException as e:
         return render(request, 'error.html', {'error_message': str(e)})
+
 def index(request):
     return render(request, 'index.html')

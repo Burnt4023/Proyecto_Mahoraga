@@ -6,43 +6,39 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Resultados de la búsqueda</title>
     <style>
-        /* Agregar estilos para el cuerpo de la página */
+        /* Estilos para el cuerpo de la página */
         body {
-            /* Configura la imagen de fondo */
             background-image: url("/static/resources/fondo.png");
-            /* Repite la imagen horizontalmente para llenar el ancho de la pantalla */
             background-repeat: repeat-x;
-            /* Fija la imagen para que no se desplace con el contenido */
             background-attachment: fixed;
         }
 
-        /* Estilos para el contenedor de título */
+        /* Estilos para el contenedor del título */
         #titulo-container {
-            background-color: rgba(255, 255, 255, 0.8); /* Fondo semi-transparente blanco */
-            padding: 10px; /* Espaciado interno */
-            border: 2px solid #000; /* Borde sólido de 2px */
-            border-radius: 5px; /* Bordes redondeados */
-            margin-bottom: 20px; /* Margen inferior */
-            text-align: center; /* Centrado del texto */
+            background-color: rgba(255, 255, 255, 0.8);
+            padding: 10px;
+            border: 2px solid #000;
+            border-radius: 5px;
+            margin-bottom: 20px;
+            text-align: center;
         }
 
         #titulo-container h1 {
-            margin: 0; /* Elimina el margen predeterminado del h1 */
+            margin: 0;
         }
 
+        /* Estilos para el contenedor de las cartas */
         #cartas-container {
             display: flex;
             flex-wrap: wrap;
             justify-content: center;
-            /* Centra horizontalmente los elementos */
             align-items: center;
-            /* Centra verticalmente los elementos */
         }
 
+        /* Estilos para las cartas */
         .carta {
-            width: calc(33% - 40px); /* Ajusta el ancho de la carta y el margen lateral */
-            margin: 0 20px 30px; /* Margen lateral de 20px y margen inferior de 30px */
-            border: 2px solid rgba(255, 255, 255, 0);
+            width: calc(33% - 40px);
+            margin: 0 20px 30px;
             border: 2px solid #000;
             border-radius: 5px;
             padding: 10px;
@@ -50,18 +46,33 @@
             background-color: rgba(255, 255, 255, 0.705);
         }
 
-        /* Estilos adicionales para la imagen de la carta */
+        /* Estilos para la imagen de la carta */
         .carta img {
             max-width: 100%;
-            /* Imagen de la carta ocupa todo el ancho disponible */
             height: auto;
-            /* Altura automática para mantener la proporción */
         }
 
-        /* Estilos para la descripción de la carta */
-        .carta .descripcion {
+        /* Estilos para el texto del tipo de carta */
+        .tipo-carta {
             margin-top: 10px;
-            /* Espacio entre la descripción y otros elementos */
+        }
+
+        /* Estilos para la palabra "Legendary" en arcoíris */
+        .arcoiris {
+            background-image: linear-gradient(to right, violet, indigo, blue, green, yellow, orange, red);
+            -webkit-background-clip: text;
+            color: transparent;
+            animation: rainbow 5s infinite;
+        }
+
+        /* Animación para el efecto arcoíris */
+        @keyframes rainbow {
+            0% {
+                filter: hue-rotate(0deg);
+            }
+            100% {
+                filter: hue-rotate(360deg);
+            }
         }
     </style>
 </head>
@@ -72,12 +83,23 @@
         <h1>Resultados de la búsqueda para "{{ nombre_carta }}"</h1>
     </div>
     
+    <!-- Contenedor de las cartas -->
     <div id="cartas-container">
         {% for carta in cartas %}
         <div class="carta">
             <img src="{{ carta.imageUrl }}" alt="{{ carta.name }}">
             <p><b>Nombre:</b> {{ carta.name }}</p>
-            <p><b>Tipo:</b> {{ carta.type }}</p>
+            <!-- Aplica la clase "arcoiris" al tipo si contiene la palabra "Legendary" -->
+            <p class="tipo-carta">
+                <b>Tipo:</b>
+                {% if "Legendary" in carta.type %}
+                    {% with carta.type|slice:"Legendary" as tipo_parts %}
+                        <span class="arcoiris">Legendary</span>{{ tipo_parts.0 }}
+                    {% endwith %}
+                {% else %}
+                    {{ carta.type }}
+                {% endif %}
+            </p>            
             <p><b>Coste de maná:</b> {{ carta.manaCost }}</p>
             <p><b>Descripción:</b> {{ carta.text }}</p>
             <p><b>Rareza:</b> {{ carta.rarity }}</p>
