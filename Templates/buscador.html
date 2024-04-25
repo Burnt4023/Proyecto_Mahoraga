@@ -1,55 +1,91 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Resultados de la búsqueda</title>
     <style>
+        /* Agregar estilos para el cuerpo de la página */
+        body {
+            /* Configura la imagen de fondo */
+            background-image: url("/static/resources/fondo.png");
+            /* Repite la imagen horizontalmente para llenar el ancho de la pantalla */
+            background-repeat: repeat-x;
+            /* Fija la imagen para que no se desplace con el contenido */
+            background-attachment: fixed;
+        }
+
+        /* Estilos para el contenedor de título */
+        #titulo-container {
+            background-color: rgba(255, 255, 255, 0.8); /* Fondo semi-transparente blanco */
+            padding: 10px; /* Espaciado interno */
+            border: 2px solid #000; /* Borde sólido de 2px */
+            border-radius: 5px; /* Bordes redondeados */
+            margin-bottom: 20px; /* Margen inferior */
+            text-align: center; /* Centrado del texto */
+        }
+
+        #titulo-container h1 {
+            margin: 0; /* Elimina el margen predeterminado del h1 */
+        }
+
         #cartas-container {
             display: flex;
             flex-wrap: wrap;
-            justify-content: center; /* Centra horizontalmente los elementos */
-            align-items: center; /* Centra verticalmente los elementos */
+            justify-content: center;
+            /* Centra horizontalmente los elementos */
+            align-items: center;
+            /* Centra verticalmente los elementos */
         }
-        
-        
+
         .carta {
-            width: calc(33% - 20px); /* Establece el ancho de cada carta (33% del contenedor menos el espacio entre cartas) */
-            margin-bottom: 20px; /* Espacio entre cartas */
-            background-color: #f0f0f0; /* Color de fondo de la carta */
-            border: 1px solid #ccc; /* Borde de la carta */
-            border-radius: 5px; /* Bordes redondeados */
-            padding: 10px; /* Espaciado interno de la carta */
-            box-sizing: border-box; /* Incluye el padding en el tamaño total */
+            width: calc(33% - 40px); /* Ajusta el ancho de la carta y el margen lateral */
+            margin: 0 20px 30px; /* Margen lateral de 20px y margen inferior de 30px */
+            border: 2px solid rgba(255, 255, 255, 0);
+            border: 2px solid #000;
+            border-radius: 5px;
+            padding: 10px;
+            box-sizing: border-box;
+            background-color: rgba(255, 255, 255, 0.705);
         }
-        
+
         /* Estilos adicionales para la imagen de la carta */
         .carta img {
-            max-width: 100%; /* Imagen de la carta ocupa todo el ancho disponible */
-            height: auto; /* Altura automática para mantener la proporción */
+            max-width: 100%;
+            /* Imagen de la carta ocupa todo el ancho disponible */
+            height: auto;
+            /* Altura automática para mantener la proporción */
         }
 
         /* Estilos para la descripción de la carta */
         .carta .descripcion {
-            margin-top: 10px; /* Espacio entre la descripción y otros elementos */
+            margin-top: 10px;
+            /* Espacio entre la descripción y otros elementos */
         }
     </style>
 </head>
+
 <body>
-    <h1>Resultados de la búsqueda para "{{ nombre_carta }}"</h1>
+    <!-- Contenedor del título -->
+    <div id="titulo-container">
+        <h1>Resultados de la búsqueda para "{{ nombre_carta }}"</h1>
+    </div>
+    
     <div id="cartas-container">
         {% for carta in cartas %}
         <div class="carta">
             <img src="{{ carta.imageUrl }}" alt="{{ carta.name }}">
-            <p>Nombre: {{ carta.name }}</p>
-            <p>Tipo: {{ carta.type }}</p>
-            <p>Coste de maná: {{ carta.manaCost }}</p>
-            <p>Descripción: {{ carta.text }}</p>
-            <p>Rareza: {{ carta.rarity }}</p>
-            <p>Conjunto: {{ carta.set }}</p>
+            <p><b>Nombre:</b> {{ carta.name }}</p>
+            <p><b>Tipo:</b> {{ carta.type }}</p>
+            <p><b>Coste de maná:</b> {{ carta.manaCost }}</p>
+            <p><b>Descripción:</b> {{ carta.text }}</p>
+            <p><b>Rareza:</b> {{ carta.rarity }}</p>
+            <p><b>Conjunto:</b> {{ carta.set }}</p>
             <!-- Puedes agregar más información de la carta aquí -->
         </div>
         {% endfor %}
     </div>
 </body>
+
 </html>
