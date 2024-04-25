@@ -93,13 +93,11 @@
             <p class="tipo-carta">
                 <b>Tipo:</b>
                 {% if "Legendary" in carta.type %}
-                    {% with carta.type|slice:"Legendary" as tipo_parts %}
-                        <span class="arcoiris">Legendary</span>{{ tipo_parts.0 }}
-                    {% endwith %}
+                    <span class="arcoiris">{{ carta.type|slice:"Legendary"|safe }}</span>
                 {% else %}
                     {{ carta.type }}
                 {% endif %}
-            </p>            
+            </p>                           
             <p><b>Coste de maná:</b> {{ carta.manaCost }}</p>
             <p><b>Descripción:</b> {{ carta.text }}</p>
             <p><b>Rareza:</b> {{ carta.rarity }}</p>
